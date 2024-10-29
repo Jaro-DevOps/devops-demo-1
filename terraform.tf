@@ -40,15 +40,14 @@ resource "aws_instance" "flask_app" {
 
   user_data = <<-EOF
               #!/bin/bash
-              apt update -y
-              apt install -y software-properties-common
-              add-apt-repository -y ppa:ansible/ansible
-              apt update -y
-              apt install -y ansible git
-              git clone -b master https://github.com/Jaro-DevOps/devops-demo-project-1 /home/ubuntu/app
+              sudo apt update -y
+              sudo apt install -y software-properties-common
+              sudo add-apt-repository -y ppa:ansible/ansible
+              sudo apt update -y
+              sudo apt install -y ansible git
+              git clone https://github.com/Jaro-DevOps/devops-demo-1 /home/ubuntu/app
               cd /home/ubuntu/app 
               ansible-playbook /home/ubuntu/playbook/playbook.yaml
-              docker-compose up -d
               EOF
 
   tags = {
