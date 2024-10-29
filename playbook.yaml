@@ -1,0 +1,22 @@
+- hosts: aws_instance
+  become: true
+  tasks:
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+    - name: Install Docker Compose
+      apt:
+        name: docker-compose
+        state: present
+    - name: Clone application repository
+      git:
+        repo: 'https://github.com/Jaro-DevOps/devops-demo-project-1'
+        dest: /home/ubuntu/app
+    - name: Start application with Docker Compose
+      shell: |
+        cd /home/ubuntu/app
+        docker-compose up -d
