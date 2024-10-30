@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "eu-west-2"
+  region = "eu-central-1"
 }
 
 resource "aws_key_pair" "deployer" {
@@ -33,7 +33,7 @@ resource "aws_security_group" "allow_web" {
 }
 
 resource "aws_instance" "flask_app" {
-  ami           = "ami-03ceeb33c1e4abcd1" #Ubuntu 22.04
+  ami           = "ami-0745b7d4092315796" #Ubuntu 22.04
   instance_type = "t2.micro"
   key_name      = aws_key_pair.deployer.key_name
   security_groups = [aws_security_group.allow_web.name]
@@ -47,7 +47,7 @@ resource "aws_instance" "flask_app" {
               sudo apt install -y ansible git
               git clone https://github.com/Jaro-DevOps/devops-demo-1 /home/ubuntu/app
               cd /home/ubuntu/app 
-              ansible-playbook /home/ubuntu/playbook/playbook.yaml
+              ansible-playbook /home/ubuntu/app/playbook.yaml
               EOF
 
   tags = {
