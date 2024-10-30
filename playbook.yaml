@@ -8,15 +8,22 @@
       apt:
         name: docker.io
         state: present
+    - name: Add user to docker group
+      user:
+        name: ubuntu
+        groups: docker
+        append: yes
     - name: Install Docker Compose
-      apt:
-        name: docker-compose
-        state: present
+      shell: |
+        curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        chmod +x /usr/local/bin/docker-compose
     - name: Clone application repository
       git:
-        repo: 'https://github.com/Jaro-DevOps/devops-demo-project-1'
+        repo: 'https://github.com/Jaro-DevOps/devops-demo-1'
         dest: /home/ubuntu/app
     - name: Start application with Docker Compose
       shell: |
         cd /home/ubuntu/app
         docker-compose up -d
+      args:
+        chdir: /home/ubuntu/app
