@@ -24,6 +24,8 @@
     - name: Start application with Docker Compose
       shell: |
         cd /home/ubuntu/app
+        sudo usermod -aG docker $USER
+        newgrp docker
         docker-compose up -d
       args:
         chdir: /home/ubuntu/app
